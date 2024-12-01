@@ -1,0 +1,29 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model InventoryHistory {
+  id          String      @id @default(uuid())
+  productId   String
+  action      ActionType
+  quantity    Int
+  location    String
+  oldValue    Json?
+  newValue    Json?
+  timestamp   DateTime    @default(now())
+  userId      String?
+}
+
+enum ActionType {
+  STOCK_CREATED
+  STOCK_UPDATED
+  STOCK_DELETED
+  PRODUCT_CREATED
+  PRODUCT_UPDATED
+  PRODUCT_DELETED
+}
